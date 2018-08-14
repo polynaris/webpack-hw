@@ -1,5 +1,5 @@
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     entry: {
@@ -12,31 +12,29 @@ module.exports = {
     module: {
         rules: [
             {
-            test: /\.js$/,
-            exclude: /node_modules/,
-            use: {
-                loader: "babel-loader"
-            }
-        },
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: "babel-loader"
+                }
+            },
             {
                 test: /\.scss$/,
-                use: ExtractTextPlugin.extract(
-                    {
-                        fallback: 'style-loader',
-                        use: ['css-loader', 'sass-loader']
-                    })
+                use: ['style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader']
             }
-            ]
+        ]
     },
     plugins: [
-        new ExtractTextPlugin(
-            {filename: 'style.[chunkhash].css', disable: false, allChunks: true}
-            ),
+        new MiniCssExtractPlugin({
+            filename: 'style.[contenthash].css',
+        }),
         new HtmlWebpackPlugin({
-            inject: false,
-            hash: true,
-            template: path.resolve(__dirname, 'src', 'index.html'),
-            filename: 'index.html'
+            template: path.resolve(__dirname, 'src', 'index.html')
         })
-    ]
+    ],
+    devServer: {
+        contentBase: path.join(__dirname, 'dist'),
+        compress: true,
+        port: 8081
+    }
 };

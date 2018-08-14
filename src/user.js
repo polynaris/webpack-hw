@@ -1,9 +1,10 @@
 export default class User {
-    constructor(firstName, lastName){
+    constructor(firstName, lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
-    sayHi(){
+
+    sayHi() {
         return `Hello, ${this.firstName} ${this.lastName}`;
     }
 }

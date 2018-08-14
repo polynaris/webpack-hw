@@ -1,6 +1,6 @@
 import User from './user';
-import './style.scss'
+import './style.scss';
 
-const user = new User ('elka', 'novogodnyaja');
+const user = new User('James', 'Bond');
 alert(user.sayHi());
 
